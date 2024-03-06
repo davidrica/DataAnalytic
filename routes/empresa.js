@@ -9,7 +9,7 @@ const {validarCampos} = require('../middlewares/validar-campos')
 const {validarJWT} = require('../middlewares/validar-jwt')
 const router = Router()
 
-const {crearEmpresa} = require("../controllers/empresas")
+const {crearEmpresa,agregarSideItem} = require("../controllers/empresas")
 
 
 router.use(validarJWT)
@@ -24,6 +24,11 @@ router.post(
     crearEmpresa
     )
 
+router.put(
+    '/addsideitem',
+    agregarSideItem
+)
+    
 
 
 module.exports = router

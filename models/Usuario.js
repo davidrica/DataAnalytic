@@ -14,14 +14,12 @@ const UsuarioSchema = Schema({
         type: String,
         required:true
     },
-    empresas:[
-        {
+    empresas:[{
             type:Schema.Types.ObjectId,
             ref:'Empresa',
             required:false
 
-        }
-],
+    }],
     
     
 //    lastToken:{

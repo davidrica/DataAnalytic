@@ -16,7 +16,11 @@ const EmpresaSchema = Schema({
     activa:{
         type:Boolean,
         default:true
-    }
+    },
+    sideitems:[{
+        titulo:String,
+        link:String
+    }],
 })
 
 EmpresaSchema.method('toJSON',function(){

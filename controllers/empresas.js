@@ -25,15 +25,64 @@ const crearEmpresa = async (req, res = response )=>{
             })    
                
         } catch (error) {
+            res.status(201).json({
+                ok:true,
+                msg:error
+            })    
             
         }
 
 
 
     
- }
+}
+
+const agregarSideItem = async (req,res=response)=>{
+
+    const {cuit}= req.body
+    
+    try {
+        let empresa = await Empresa.findOne({cuit})
+        const {titulo,link} = req.body
+        const sideitem ={titulo,link}
+        if (!empresa){
+            return res.status(400).json({
+                ok:false,
+                msg:"La Empresa no Existe"
+            })
+        }
+
+        const existe = empresa.sideitems.find((side) => side.titulo === titulo || side.link === link);
+        if (existe) {
+            return res.status(400).json({
+                ok:false,
+                msg:"Ya existe el titulo o Link "
+            })
+
+            
+        }
+        empresa.sideitems.push(sideitem)
+        const empresaActualizado = await Empresa.findByIdAndUpdate(empresa.id,empresa,{new:true})
+
+        res.status(201).json({
+            ok:true,
+            empresaActualizado
+        })    
+           
+    } catch (error) {
+        console.log(error)
+        res.status(201).json({
+            ok:true,
+            msg:error
+        })    
+        
+    }
+
+
+}
 
  
 module.exports = {
-    crearEmpresa
+    crearEmpresa,
+    agregarSideItem
 }
