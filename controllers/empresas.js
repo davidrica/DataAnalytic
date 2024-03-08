@@ -37,6 +37,22 @@ const crearEmpresa = async (req, res = response )=>{
     
 }
 
+const getEmpresas = async (req,res=response)=>{
+    try {
+        const empresas = await Empresa.find()
+
+        res.status(201).json({
+            ok:true,
+            empresas:empresas
+        })    
+            
+    } catch (error) {
+        console.log(error)
+        
+    }
+
+
+}
 const agregarSideItem = async (req,res=response)=>{
 
     const {cuit}= req.body
@@ -84,5 +100,6 @@ const agregarSideItem = async (req,res=response)=>{
  
 module.exports = {
     crearEmpresa,
-    agregarSideItem
+    agregarSideItem,
+    getEmpresas
 }
