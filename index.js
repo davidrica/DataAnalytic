@@ -21,6 +21,8 @@ app.use('/api/auth',require('./routes/auth'));
 
 app.use('/api/empresa',require('./routes/empresa'));
 
+app.use('/api/session',require('./routes/sesion'));
+
 app.get('*',(req,res)=>{
     res.sendFile(__dirname + '/public/index.html')
 })
