@@ -24,9 +24,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-      env:
-          First_Name: Mona
-    - run: echo "$First_Name. Today is $DAY_OF_WEEK!"
+    - run: echo "${{env.DB_CNN}}. Today is $DAY_OF_WEEK!"
     - run: npm i
     - run: npm run build --if-present
     - run: pm2 reload 0
