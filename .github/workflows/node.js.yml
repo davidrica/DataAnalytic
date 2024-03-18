@@ -7,7 +7,7 @@ on:
   push:
     branches: [ "main" ]
 env:
-  port: ${{ vars.PORT }}
+  port: ${{ secrets.PORT }}
   
 jobs:
   build:
