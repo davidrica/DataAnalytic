@@ -6,7 +6,9 @@ name: Node.js CI
 on:
   push:
     branches: [ "main" ]
-
+env:
+  port: ${{ vars.PORT }}
+  
 jobs:
   build:
     runs-on: self-hosted
@@ -23,7 +25,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: echo "${{secrets.DB_CNN}}. Today is $DAY_OF_WEEK!"
     - run: npm i
     - run: npm run build --if-present
     - run: pm2 reload 0
+    - run: echo 'Hi ${{ env.port }}'
