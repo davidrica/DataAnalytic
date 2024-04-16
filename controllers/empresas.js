@@ -60,8 +60,8 @@ const agregarSideItem = async (req,res=response)=>{
     
     try {
         let empresa = await Empresa.findOne({cuit})
-        const {titulo,link,key} = req.body
-        const sideitem ={titulo,link,key}
+        let {titulo,link,key} = req.body
+        
 
         if (!empresa){
             return res.status(400).json({
@@ -70,6 +70,14 @@ const agregarSideItem = async (req,res=response)=>{
             })
         }
         
+        if (key>0){
+            
+            link = obtenerIframe(key)
+            
+        }
+        
+        const sideitem ={titulo,link,key}
+
         const existe = empresa.sideitems.find((side) => side.titulo === titulo || side.link === link || side.key === key );
         if (existe) {
             return res.status(400).json({
@@ -78,9 +86,6 @@ const agregarSideItem = async (req,res=response)=>{
             })
 
             
-        }
-        if (!key){
-            sideitem.link = obtenerIframe(key)
         }
         
         
