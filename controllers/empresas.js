@@ -42,13 +42,6 @@ const crearEmpresa = async (req, res = response )=>{
 const getEmpresas = async (req,res=response)=>{
     try {
         const empresas = await Empresa.find()
-        empresas.forEach(empresa => {
-            let sides = empresa.sideitems;
-            sides.forEach(side => {
-                side.key = obtenerIframe();
-                console.log(side.key)
-            });
-        });
         res.status(201).json({
             ok:true,
             empresas:empresas
@@ -69,7 +62,7 @@ const agregarSideItem = async (req,res=response)=>{
         let empresa = await Empresa.findOne({cuit})
         const {titulo,link,key} = req.body
         const sideitem ={titulo,link,key}
-        console.log(sideitem)
+
         if (!empresa){
             return res.status(400).json({
                 ok:false,
@@ -86,7 +79,10 @@ const agregarSideItem = async (req,res=response)=>{
 
             
         }
-        sideitem.link = obtenerIframe(key)
+        if (!key){
+            sideitem.link = obtenerIframe(key)
+        }
+        
         
         empresa.sideitems.push(sideitem)
         

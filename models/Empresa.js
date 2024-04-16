@@ -19,7 +19,8 @@ const EmpresaSchema = Schema({
     },
     sideitems:[{
         titulo:String,
-        link:String
+        link:String,
+        key:String
     }],
 })
 
