@@ -1,7 +1,9 @@
 const {response} = require('express')
 const bcrypt = require('bcryptjs')
 const Empresa= require('../models/Empresa')
-const {generarJWT} = require('../helpers/jwt')
+const {generarJWT, obtenerIframe} = require('../helpers/jwt')
+
+
 
 const crearEmpresa = async (req, res = response )=>{
         const {cuit}= req.body
@@ -40,7 +42,13 @@ const crearEmpresa = async (req, res = response )=>{
 const getEmpresas = async (req,res=response)=>{
     try {
         const empresas = await Empresa.find()
-
+        empresas.forEach(empresa => {
+            let sides = empresa.sideitems;
+            sides.forEach(side => {
+                side.key = obtenerIframe();
+                console.log(side.key)
+            });
+        });
         res.status(201).json({
             ok:true,
             empresas:empresas
@@ -59,16 +67,17 @@ const agregarSideItem = async (req,res=response)=>{
     
     try {
         let empresa = await Empresa.findOne({cuit})
-        const {titulo,link} = req.body
-        const sideitem ={titulo,link}
+        const {titulo,link,key} = req.body
+        const sideitem ={titulo,link,key}
+        console.log(sideitem)
         if (!empresa){
             return res.status(400).json({
                 ok:false,
                 msg:"La Empresa no Existe"
             })
         }
-
-        const existe = empresa.sideitems.find((side) => side.titulo === titulo || side.link === link);
+        
+        const existe = empresa.sideitems.find((side) => side.titulo === titulo || side.link === link || side.key === key );
         if (existe) {
             return res.status(400).json({
                 ok:false,
@@ -77,7 +86,10 @@ const agregarSideItem = async (req,res=response)=>{
 
             
         }
+        sideitem.link = obtenerIframe(key)
+        
         empresa.sideitems.push(sideitem)
+        
         const empresaActualizado = await Empresa.findByIdAndUpdate(empresa.id,empresa,{new:true})
 
         res.status(201).json({

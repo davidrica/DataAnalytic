@@ -8,6 +8,10 @@ const SideitemSchema = Schema({
     link:{
         type:String,
         required:true
+    },
+    key:{
+        type:String,
+        required:true,
     }
 })
 
