@@ -27,7 +27,9 @@ const generarJWT= (uid,name)=> {
 const obtenerIframe = (dashboard)=>{
     var METABASE_SITE_URL = "https://metabase.analizardatos.com";
     var METABASE_SECRET_KEY = "9c79a212553a4d1dc13a1e78062b750081e2206e5db5cb21bdba3e2c8a797202";
-
+    if (typeof(dashboard)=='string'){
+        dashboard=parseInt(dashboard)
+    }
     var payload = {
     resource: { dashboard: dashboard },
     params: {},
