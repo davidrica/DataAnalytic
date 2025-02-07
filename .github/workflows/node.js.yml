@@ -31,4 +31,5 @@ jobs:
     - run: npm i 
     - run: npm run build --if-present
     - run: echo -e "PORT = ${{env.PORT}} \nDB_CNN= ${{env.DB_CNN}} \nSECRET_JWT_SEED= ${{env.SECRET_JWT_SEED}}" > .env
+    - run: cd /home/gitweb/actions-runner/data-backend/DataAnalytic/DataAnalytic/
     - run: pm2 start /home/gitweb/actions-runner/data-backend/DataAnalytic/DataAnalytic/index.js --name 'DataAnalytic' --watch
